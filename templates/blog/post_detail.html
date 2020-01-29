@@ -1,0 +1,44 @@
+{% extends 'blog/base.html' %} {% block title %}{{ post.title }} | {{ block.super }}{% endblock %} {% block content %} {% include 'blog/alerts.html' %}
+<div class="section-1" style="float:right;">
+    {% if post.author.id is request.user.id %}
+    <a href="{% url 'blog:post_edit' id=post.id %}">
+        <i class="far fa-edit fa-2x" data-toggle="tooltip" data-placement="left" title="EDIT" style="color: chartreuse;"></i>
+    </a>
+    <a href="{% url 'blog:post_delete' id=post.id %}" id="delete">
+        <i style="color: crimson;" data-toggle="tooltip" data-placement="bottom" title="DELETE" class="far fa-trash-alt fa-2x"></i>
+    </a>
+    {%else%}
+    <a href="{% url 'blog:report' reqid=request.user.id proid=post.author.id posid=post.id comid=0 %}">
+    <i class="fas fa-bug fa-2x" style="color:darkslategray" data-toggle="tooltip" data-placement="bottom" title="REPORT""></i> 
+   </a> {%endif%}
+</div>
+<h3>Post by: {{ post.author }}</h3>
+<h4>{{ post.title }}</h4>
+<div class="row">
+    <div class="col-md-12">
+
+        <div id="mdb-lightbox-ui"></div>
+
+        <div class="mdb-lightbox">
+            <div class="row">
+                {% for p in post.images_set.all %} {% if p.image %}
+                <figure class="col-md-4">
+                    <a href="{{ p.image.url }}" data-size="1600x1067">
+                        <img src="{{ p.image.url }}" class="img-fluid" />
+                    </a>
+                </figure>
+                {% endif %} {% endfor %}
+            </div>
+        </div>
+
+    </div>
+</div>
+<p>{{ post.body }}</p>
+<div id="like-section">
+    {% include 'blog/like_section.html' %}
+</div>
+{% if not post.restrict_comment %}
+<div class="main-comment-section ">
+    {% include 'blog/comments.html' %}
+</div>
+{% endif %} {% endblock %}

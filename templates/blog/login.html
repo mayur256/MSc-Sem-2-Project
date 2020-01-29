@@ -1,0 +1,15 @@
+{% extends 'blog/base.html' %} {% block content %} {% include 'blog/alerts.html' %}
+<div align="center">
+    <div class="col-6">
+        <form method="post">
+            {% csrf_token %} {{ form.as_p }}
+            <small>
+        <a href="{% url 'password_reset' %}">Forgotten Your Password?</a>
+      </small>
+            <br>
+            <a href="{% url 'register' %}"><i class="fas fa-user-plus">Register</i></a>
+            <input type="submit" value="Login" class="btn btn-outline-success">
+        </form>
+    </div>
+</div>
+{% endblock %}

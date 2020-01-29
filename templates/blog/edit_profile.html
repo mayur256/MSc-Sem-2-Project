@@ -1,0 +1,50 @@
+{% extends 'blog/base.html' %} {% block title %}Edit Profile | {{ block.super }}{% endblock %} {% block content %}
+<div align="center">
+    <form action="." method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table border=1>
+            <tr>
+                {{ profile_form.photo.errors }}
+                <th><label for="id_photo">Profile Pic:</label></th>
+                <td>{{ profile_form.photo }}</td>
+            </tr>
+            <tr>
+                {{ user_form.username.errors }}
+                <th><label for="id_username">User Name:</label></th>
+                <td>{{ user_form.username }}</td>
+            </tr>
+            <tr>
+                {{ user_form.first_name.errors }}
+                <th><label for="id_first_name">First Name:</label></th>
+                <td>{{ user_form.first_name }}</td>
+            </tr>
+            <tr>
+                {{ user_form.last_name.errors }}
+                <th><label for="id_last_name">Last Name:</label></th>
+                <td>{{ user_form.last_name }}</td>
+            </tr>
+            <tr>
+                {{ user_form.email.errors }}
+                <th><label for="id_email">Email:</label></th>
+                <td>{{ user_form.email }}</td>
+            </tr>
+            <tr>
+                {{ profile_form.dob.errors }}
+                <th><label for="id_dob">Date of Birth:</label></th>
+                <td>{{ profile_form.dob }}</td>
+            </tr>
+            <tr>
+                {{ profile_form.mob.errors }}
+                <th><label for="id_mob">Mobile:</label></th>
+                <td>{{ profile_form.mob }}</td>
+            </tr>
+            <tr>
+                {{ profile_form.city.errors }}
+                <th><label for="id_city">City:</label></th>
+                <td>{{ profile_form.city }}</td>
+            </tr>
+        </table>
+        <input type="submit" value="Save Changes" class="btn btn-outline-success">
+    </form>
+</div>
+{% endblock %}

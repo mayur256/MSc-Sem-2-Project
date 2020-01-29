@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-dark">
+    <a class="navbar-brand text-white" href="{% url 'post_list' %}">ManataleBol</a>
+    <button class="navbar-toggler indigo darken-4" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"></span>
+</button> {% if request.user.is_authenticated %}
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <form action='\'>
+                <input class="form-control" type="search" required placeholder="Search" aria-label="Search" name='q'>
+            </form>
+        </ul>&nbsp;&nbsp;
+        <ul class="navbar-nav">{% if request.user.is_superuser %}{%else%} {% if request.user.profile.photo %}
+            <a href="{% url 'blog:edit_profile' %}">
+                <div class="text text-primary waves-effect"><img src="{{ request.user.profile.photo.url }}" alt="" height="25" width="25"> Hi {{ request.user|capfirst }}
+                </div>
+            </a>&nbsp;&nbsp; {% else %}
+            <a href="{% url 'blog:edit_profile' %}">
+                <div class="text text-primary waves-effect"><i class="fas fa-1x fa-user-circle">Hi {{ request.user|capfirst }}</i>
+                </div>
+            </a> &nbsp;&nbsp;{% endif %}
+            <a href="{% url 'blog:post_create' %}">
+                <div class="text text-secondary waves-effect"><i class="fas fa-1x fa-plus-circle">Post Create</i></div>
+            </a> &nbsp;&nbsp;{%endif%}
+            <a href="{% url 'user_logout' %}">
+                <div class="text text-danger  waves-effect"><i class="fas fa-1x fa-power-off">Logout</i></div>
+            </a>
+        </ul>
+    </div>{% endif %}
+</nav>

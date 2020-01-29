@@ -1,0 +1,73 @@
+{% extends 'blog/base.html' %} {% block title %}Welcome to {{ block.super }}{% endblock %} {% block content %} {% include 'blog/alerts.html' %}
+<div class="row d-flex justify-content-center">
+    {% for post in posts %}
+    <div class="col-10 col-lg-10 col-md-10">
+        <div class="img-thumbnail">
+            {% if post.author.id is request.user.id %}
+            <div class="section-1" style="float:right;">
+                <a href="{% url 'blog:post_edit' id=post.id %}">
+                    <i class="far fa-2x fa-edit" data-toggle="tooltip" data-placement="left" title="EDIT" style="color: chartreuse;"></i>
+                </a>
+                <a href="{% url 'blog:post_delete' id=post.id %}" id="delete">
+                    <i style="color: crimson;" data-toggle="tooltip" data-placement="bottom" title="DELETE" class="far fa-2x fa-trash-alt"></i>
+                </a>
+            </div>
+            {%else%}
+            <div class="section-1" style="float:right;">
+                <a href="{% url 'blog:report' reqid=request.user.id proid=post.author.id posid=post.id comid=0 %}">
+                        <i class="fas fa-bug fa-2x" style="color:darkslategray" data-toggle="tooltip" data-placement="bottom" title="REPORT""></i> 
+                    </a>
+            </div>
+            {%endif%}
+            <a href="{{ post.get_absolute_url }}">
+                {% if post.author.profile.photo %}
+                <img src="/media/{{ post.author.profile.photo }}" alt="" height="35" width="35">&nbsp; {% else %}
+                <i class="fas fa-2x fa-user-circle"></i>&nbsp;{% endif %} {{ post.author|capfirst }}&nbsp;Was {{post.status|capfirst}} &nbsp;&nbsp;<br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="mdb-lightbox-ui">
+                        </div>
+                        <div class="mdb-lightbox">
+                            <div class="row">
+                                {% for image in pic %} {% if image.title == post.title %}
+                                <figure class="col-md-4">
+                                    <img src="/media/{{ image.image }}" class="img-fluid" />
+            </figure>
+            {%else%} {%endif%} {% endfor %}
+        </div>
+    </div>
+</div>
+</div>
+Title:-<i>{{ post.title }}</i>
+<br>
+<b>{{ post.body }}</b>
+</a>
+            <br>
+            <i class="fas fa-thumbs-up fa-1x red-text">&nbsp;{{ post.total_likes }}&nbsp;Like </i>
+            <small style="float:right">{{ post.created }}</small>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<div class="row d-flex justify-content-center">
+    <ul class="pagination">
+        {% if posts.has_previous %}
+        <li class="page-item">
+            <a href="?page={{ posts.previous_page_number }}" style="float:left" class="page-link">&laquo;</a>
+        </li>
+        {% endif %} {% for p in posts.paginator.page_range %} {% if posts.number == p %}
+        <li class="page-item active">
+            <a href="?page={{ p }}" class="page-link">{{ p }}</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a href="?page={{ p }}" class="page-link">{{ p }}</a>
+        </li>
+        {% endif %} {% endfor %} {% if posts.has_next %}
+        <li class="page-item">
+            <a href="?page={{ posts.next_page_number }}" style="float:right" class="page-link">&raquo;</a>
+        </li>
+        {% endif %}
+    </ul>
+</div>
+{% endblock %}

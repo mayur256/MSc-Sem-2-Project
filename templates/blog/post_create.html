@@ -1,0 +1,44 @@
+{% extends 'blog/base.html' %} {% block content %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table class="table table-bordered">
+        <tr>
+            {{ form.title.errors }}
+            <th><label for="id_title">Title:</label>
+            </th>
+            <td colspan="3">
+                {{ form.title }}
+            </td>
+        </tr>
+        <tr>
+            {{ form.body.errors }}
+            <th><label for="id_body">Body:</label>
+            </th>
+            <td colspan="3">
+                {{ form.body }}
+            </td>
+        </tr>
+        <tr>{{ formset.management_form }} {% for f in formset %} {{ form.images.errors }}
+            <th><label for="id_image">Image:</label>
+            </th>
+            <td colspan="3">
+                {{ f.image }}
+            </td>
+            {% endfor %}</tr>
+        <tr>
+            {{ form.status.errors }}
+            <th><label for="id_status">Status:</label>
+            </th>
+            <td>
+                {{ form.status }}
+            </td>
+            <th><label for="id_restrict_comment">Disable Comment:</label>
+            </th>
+            <td>
+                {{ form.restrict_comment }}
+            </td>
+        </tr>
+    </table>
+    <input type="submit" value="Create" align="center" class="btn btn-outline-success">
+</form>
+{% endblock %}

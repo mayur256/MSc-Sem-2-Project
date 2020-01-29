@@ -1,0 +1,24 @@
+{% extends 'blog/base.html' %} {% block content %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table class="table table-bordered">
+        <tr>
+            {{ user_form.reason.errors }}
+            <th><label for="id_reason">Reason:</label>
+            </th>
+            <td>
+                {{ user_form.reason }}
+            </td>
+        </tr>
+        <tr>
+            {{ user_form.body.errors }}
+            <th><label for="id_body">Body:</label>
+            </th>
+            <td colspan="3">
+                {{ user_form.body }}
+            </td>
+        </tr>
+    </table>
+    <input type="submit" value="Create" class="btn btn-outline-success">
+</form>
+{% endblock %}
